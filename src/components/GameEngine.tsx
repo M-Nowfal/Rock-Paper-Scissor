@@ -1,6 +1,9 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import rock from "../assets/rock.png";
+import paper from "../assets/paper.png";
+import scissor from "../assets/scissor.png";
 
 async function generateRandomChoice(): Promise<string> {
   return new Promise((resolve: (value: string) => void) => {
@@ -52,6 +55,14 @@ const GameEngine = ({ userSelected, setUserSelected, setScore }: {
     }
   };
 
+  function getImage(choice: string) {
+    const images: Record<string, string> = {
+      rock, paper, scissor
+    };
+    return images[choice];
+  }
+
+
   useEffect(() => {
     if (userSelected) {
       setIsAnimating(true);
@@ -79,7 +90,7 @@ const GameEngine = ({ userSelected, setUserSelected, setScore }: {
   return (
     <div className="space-y-8 overflow-hidden">
       <AnimatePresence>
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
@@ -93,16 +104,16 @@ const GameEngine = ({ userSelected, setUserSelected, setScore }: {
 
       <div className="flex flex-col items-center">
         <div className="relative flex justify-center items-center h-64 w-full max-w-2xl">
-          <motion.div 
+          <motion.div
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
             className="absolute left-0 z-10 bg-white dark:bg-gray-700 p-4 rounded-full shadow-xl border-4 border-blue-400 dark:border-blue-500"
           >
             <div className="w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
-              <img 
-                src={`src/assets/${userSelected}.png`} 
-                alt={userSelected} 
+              <img
+                src={getImage(userSelected)}
+                alt={userSelected}
                 className="w-full h-full object-contain"
               />
             </div>
@@ -115,16 +126,16 @@ const GameEngine = ({ userSelected, setUserSelected, setScore }: {
             </div>
           </div>
 
-          <motion.div 
+          <motion.div
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
             className="absolute right-0 z-10 bg-white dark:bg-gray-700 p-4 rounded-full shadow-xl border-4 border-purple-400 dark:border-purple-500"
           >
             <div className="w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
-              <img 
-                src={`src/assets/${randomChoices || alternateChoices}.png`} 
-                alt={randomChoices || alternateChoices} 
+              <img
+                src={getImage(randomChoices || alternateChoices)}
+                alt={randomChoices || alternateChoices}
                 className={`w-full h-full object-contain ${isAnimating ? 'animate-pulse' : ''}`}
               />
             </div>

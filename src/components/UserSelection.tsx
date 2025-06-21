@@ -1,5 +1,8 @@
 
 import { motion } from "framer-motion";
+import rock from "../assets/rock.png";
+import paper from "../assets/paper.png";
+import scissor from "../assets/scissor.png";
 
 const choices = [
   { id: "rock", name: "Rock", color: "from-blue-400 to-blue-600" },
@@ -11,6 +14,13 @@ const UserSelection = ({ setUserSelected, setScore }: {
   setUserSelected: (value: string) => void,
   setScore: (value: any) => void
 }) => {
+
+  function getImage(choice: string) {
+    const images: Record<string, string> = {
+      rock, paper, scissor
+    };
+    return images[choice];
+  }
 
   return (
     <div className="space-y-10">
@@ -34,7 +44,7 @@ const UserSelection = ({ setUserSelected, setScore }: {
             >
               <div className="bg-white/20 md:mt-1 rounded-b-full p-2 md:p-4 md:mb-1">
                 <img
-                  src={`src/assets/${choice.id}.png`}
+                  src={getImage(choice.id)}
                   alt={choice.name}
                   className="w-16 h-16 md:w-20 md:h-20 object-contain"
                 />
